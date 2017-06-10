@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="xyz.abug.www.intelligentagriculture.xyz.abug.www.activity.MainActivity">
+
+    <TextView
+        android:id="@+id/main_toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="智 能 农 业"
+        android:textColor="#6ad09e"
+        android:textSize="20sp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_frame_load"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="3dp">
+
+        <LinearLayout
+            android:id="@+id/main_linear_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_img_home"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/b1" />
+
+            <TextView
+                android:id="@+id/main_text_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="首页"
+                android:textColor="#879490" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_linear_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_img_setting"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/b2" />
+
+            <TextView
+                android:id="@+id/main_text_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="设置"
+                android:textColor="#879490" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_linear_help"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_img_help"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/b3" />
+
+            <TextView
+                android:id="@+id/main_text_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="帮助"
+                android:textColor="#879490" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
