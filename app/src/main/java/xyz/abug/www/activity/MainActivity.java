@@ -1,5 +1,9 @@
 package xyz.abug.www.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,8 +23,14 @@ import java.util.List;
 import xyz.abug.www.fragment.HelpFragment;
 import xyz.abug.www.fragment.HomeFragment;
 import xyz.abug.www.fragment.SettingFragment;
+import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
+import xyz.abug.www.service.GetJsonServer;
+import xyz.abug.www.utils.Utility;
 import xyz.abug.www.utils.Utils;
+
+import static xyz.abug.www.utils.Utils.CAST_CONFIG;
+import static xyz.abug.www.utils.Utils.CAST_SENSOR;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout mLinearHome, mLinearHelp, mLinearSetting;
@@ -33,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyFragmentPagerAdapter mFragmentAdapter;
     private ViewPager mViewPager;
     private TextView mTextTitle;
+    private MyBroadCast mMyBroadCast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         bindID();
         init();
+        regBroad();
+        startMyService();
+    }
+
+    /**
+     * 注册广播
+     */
+    private void regBroad() {
+        mMyBroadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter(CAST_SENSOR);
+        intentFilter.addAction(CAST_CONFIG);
+        registerReceiver(mMyBroadCast, intentFilter);
+    }
+
+
+    /**
+     * 启动服务
+     */
+    private void startMyService() {
+        Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
+        startService(intent);
     }
 
     /**
@@ -227,6 +259,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Utils.mIsRunning = false;
+        Utils.mIsGetData = false;
+        Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
+        stopService(intent);
+        if (mMyBroadCast != null)
+            unregisterReceiver(mMyBroadCast);
     }
+
+    /**
+     * 广播接收服务返回的数据
+     */
+    class MyBroadCast extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(CAST_CONFIG)) {
+                String data = intent.getStringExtra("data");
+                Utils.logData("广播接受到阈值数据：" + data);
+
+            } else if (action.equals(CAST_SENSOR)) {
+                //传感器
+                String data = intent.getStringExtra("data");
+                Utils.logData("广播接受到传感器数据：" + data);
+                Sensor sensor = Utility.jsonSensor(data);
+                HomeFragment.showDataSensor(sensor);
+            }
+        }
+    }
+
 }

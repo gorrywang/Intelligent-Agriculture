@@ -2,6 +2,7 @@
   <dictionary name="Dell">
     <words>
       <w>abug</w>
+      <w>addr</w>
       <w>banbengengx</w>
       <w>bann</w>
       <w>dakaibaojing</w>
@@ -13,15 +14,22 @@
       <w>guangzhao</w>
       <w>guangzhaobeijing</w>
       <w>guanyuwomen</w>
+      <w>gzqd</w>
       <w>imgbtn</w>
       <w>intelligentagriculture</w>
+      <w>kqsd</w>
+      <w>kqwd</w>
       <w>logding</w>
       <w>newp</w>
       <w>pointview</w>
       <w>qinchuhuancun</w>
+      <w>rexp</w>
+      <w>trsd</w>
+      <w>trwd</w>
       <w>turangbeijing</w>
       <w>zidong</w>
       <w>zidongkongzhi</w>
+      <w>znyy</w>
     </words>
   </dictionary>
 </component>

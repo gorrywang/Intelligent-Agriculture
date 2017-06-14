@@ -5,19 +5,20 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import xyz.abug.www.activity.ContentActivity;
 import xyz.abug.www.adapter.MyPagerAdapter;
+import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
 import xyz.abug.www.utils.Utils;
 
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private int[] mPicGroup = new int[]{R.drawable.bana1, R.drawable.bana2, R.drawable.bana3, R.drawable.co2};
     private MyPagerAdapter mMyPagerAdapter;
     private LinearLayout mLinearPointView;
+    private static TextView mTextCO2, mTextGzqd, mTextTrwd, mTextTrsd, mTextKqwd, mTextKqsd;
     //记针
     private int count = 0;
     private ImageButton mImgBtnCO2, mImgBtnSunny, mImgBtnTr, mImgBtnKq;
@@ -42,7 +44,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-            Log.e("tag", mViewPager.getCurrentItem() + "");
+//            Log.e("tag", mViewPager.getCurrentItem() + "");
         }
     };
 
@@ -70,8 +72,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // 开启轮询
         new Thread() {
             public void run() {
-                Utils.mIsRunning = true;
-                while (Utils.mIsRunning) {
+                Utils.mIsGetData = true;
+                while (Utils.mIsGetData) {
                     try {
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
@@ -127,6 +129,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      * 绑定id
      */
     private void bindID() {
+        //空气温度
+        mTextKqwd = (TextView) mView.findViewById(R.id.frag_home_text_kqwd);
+        //空气适度
+        mTextKqsd = (TextView) mView.findViewById(R.id.frag_home_text_kqsd);
+        //土壤温度
+        mTextTrwd = (TextView) mView.findViewById(R.id.frag_home_text_trwd);
+        //土壤湿度
+        mTextTrsd = (TextView) mView.findViewById(R.id.frag_home_text_trsd);
+        //光照强度
+        mTextGzqd = (TextView) mView.findViewById(R.id.frag_home_text_gzqd);
+        //co2浓度
+        mTextCO2 = (TextView) mView.findViewById(R.id.frag_home_text_co2);
         mViewPager = (ViewPager) mView.findViewById(R.id.frag_home_viewpager_ban);
         mLinearPointView = (LinearLayout) mView.findViewById(R.id.frag_home_linear_pointview);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -183,4 +197,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ContentActivity.ActivityJump(getActivity(), i);
     }
 
+
+    /**
+     * 传感器数值
+     */
+    public static void showDataSensor(Sensor sensor) {
+        mTextCO2.setText(sensor.co2 + "");
+        mTextGzqd.setText(sensor.light + "");
+        mTextTrwd.setText(sensor.soilTemperature + "");
+        mTextTrsd.setText(sensor.soilHumidity + "");
+        mTextKqwd.setText(sensor.airTemperature + "");
+        mTextKqsd.setText(sensor.airHumidity + "");
+    }
 }
