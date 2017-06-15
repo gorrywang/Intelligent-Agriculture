@@ -281,26 +281,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             int trwdMin = mConfig.getMinSoilTemperature();
             int trwdMax = mConfig.getMaxSoilTemperature();
             boolean b3 = startCompare(trwd, trwdMin, trwdMax);
-            setPic(b3, mImgTR);
             //土壤湿度
             int trsd = sensor.soilHumidity;
             int trsdMin = mConfig.getMinSoilHumidity();
             int trsdMax = mConfig.getMaxSoilHumidity();
             boolean b4 = startCompare(trsd, trsdMin, trsdMax);
-            setPic(b4, mImgTR);
+            setPic(b3, b4, mImgTR);
             //判断空气指数
             //空气温度
             int kqwd = sensor.airTemperature;
             int kqwdMin = mConfig.getMinAirTemperature();
             int kqwdMax = mConfig.getMaxAirTemperature();
             boolean b5 = startCompare(kqwd, kqwdMin, kqwdMax);
-            setPic(b5, mImgKQ);
             //空气湿度
             int kqsd = sensor.airHumidity;
             int kqsdMin = mConfig.getMinAirHumidity();
             int kqsdMax = mConfig.getMaxAirHumidity();
             boolean b6 = startCompare(kqsd, kqsdMin, kqsdMax);
-            setPic(b6, mImgKQ);
+            setPic(b5, b6, mImgKQ);
         }
     }
 }
