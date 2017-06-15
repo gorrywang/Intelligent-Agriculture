@@ -37,6 +37,10 @@ public class Utils {
      */
     public static final String CAST_CONFIG = "xyz.abug.www.znyy.yz";
     /**
+     * 获取到广播
+     */
+    public static final String CAST_STATUS = "xyz.abug.www.znyy.status";
+    /**
      * 程序结束后关闭获取数据
      */
     public static boolean mIsGetData = true;

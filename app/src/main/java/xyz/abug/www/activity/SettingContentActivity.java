@@ -35,11 +35,13 @@ public class SettingContentActivity extends AppCompatActivity {
     private Fragment mFr;
     private ImageButton mImgBtn;
     private MyBroadCast mMyBroadCast;
+    private static Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_content);
+        mContext = this;
         //注册广播
         regBroad();
         //开启服务
@@ -90,7 +92,6 @@ public class SettingContentActivity extends AppCompatActivity {
      * 启动服务
      */
     private void startMyService() {
-        Utils.mIsGetData = true;
         Intent intent = new Intent(SettingContentActivity.this, GetJsonServer.class);
         startService(intent);
     }
@@ -109,13 +110,16 @@ public class SettingContentActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Utils.mIsGetData = false;
         Intent intent = new Intent(SettingContentActivity.this, GetJsonServer.class);
         stopService(intent);
         if (mMyBroadCast != null)
             unregisterReceiver(mMyBroadCast);
     }
 
+    private static void closeService() {
+        Intent intent = new Intent(mContext, GetJsonServer.class);
+        mContext.stopService(intent);
+    }
 
     private int a = 0;
     private int b = 0;
@@ -131,9 +135,10 @@ public class SettingContentActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             if (a == 1 && b == 1) {
-                Utils.mIsGetData = false;
                 if (mSensor != null && mConfig != null) {
-                    setPic(mSensor,mConfig);
+                    setPic(mSensor, mConfig);
+                    //关闭服务
+                    closeService();
                 }
                 return;
             }

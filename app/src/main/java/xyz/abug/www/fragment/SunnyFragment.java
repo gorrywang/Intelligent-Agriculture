@@ -6,12 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import xyz.abug.www.activity.ContentActivity;
 import xyz.abug.www.gson.CGQStatus;
+import xyz.abug.www.gson.Config;
+import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
 import xyz.abug.www.utils.Utils;
 
@@ -20,11 +21,13 @@ import xyz.abug.www.utils.Utils;
  * 光照
  */
 
-public class SunnyFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class SunnyFragment extends Fragment implements View.OnClickListener {
 
     private View mView;
-    private static ToggleButton mToggleFengming;
-    private static ToggleButton mToggleGuangzhao;
+    private static ImageView mToggleFengming;
+    private static ImageView mToggleGuangzhao;
+    private static TextView mText1;
+    private static TextView mText2;
 
     @Nullable
     @Override
@@ -43,64 +46,87 @@ public class SunnyFragment extends Fragment implements CompoundButton.OnCheckedC
      * 绑定id
      */
     private void bindID() {
-        mToggleFengming = (ToggleButton) mView.findViewById(R.id.frag_sunny_fengming);
-        mToggleGuangzhao = (ToggleButton) mView.findViewById(R.id.frag_sunny_guangzhao);
-        mToggleFengming.setOnCheckedChangeListener(this);
-        mToggleGuangzhao.setOnCheckedChangeListener(this);
+        mToggleFengming = (ImageView) mView.findViewById(R.id.frag_sunny_fengming);
+        mToggleGuangzhao = (ImageView) mView.findViewById(R.id.frag_sunny_guangzhao);
+        mText1 = (TextView) mView.findViewById(R.id.b_text_1);
+        mText2 = (TextView) mView.findViewById(R.id.b_text_2);
+        mToggleFengming.setOnClickListener(this);
+        mToggleGuangzhao.setOnClickListener(this);
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Toast.makeText(getActivity(), isChecked + "", Toast.LENGTH_SHORT).show();
-        int id = buttonView.getId();
-        if (isChecked) {
-            switch (id) {
-                case R.id.frag_sunny_guangzhao:
-                    //光照
-                    ContentActivity.control(Utils.KZ_DENGGUANG_KAI);
-                    break;
-                case R.id.frag_sunny_fengming:
-                    //蜂鸣
-                    ContentActivity.control(Utils.KZ_FENGMING_KAI);
-                    break;
-            }
-        } else {
-            switch (id) {
-                case R.id.frag_sunny_guangzhao:
-                    //光照
-                    ContentActivity.control(Utils.KZ_DENGGUANG_GUAN);
-                    break;
-                case R.id.frag_sunny_fengming:
-                    //蜂鸣
-                    ContentActivity.control(Utils.KZ_FENGMING_GUAN);
-                    break;
 
-            }
-        }
-    }
+    private static CGQStatus status;
 
     /**
-     * 设备状态
+     * 设备状态(开关)
      */
     public static void showData(CGQStatus cgqStatus) {
+        status = cgqStatus;
         String result = cgqStatus.getResult();
         if (result.equals("ok")) {
             //蜂鸣
             int buzzer = cgqStatus.getBuzzer();
             if (buzzer == 1) {
                 //开
-                mToggleFengming.setChecked(true);
+                mToggleFengming.setImageResource(R.drawable.dakaibaojing2);
             } else {
                 //关
-                mToggleFengming.setChecked(false);
+                mToggleFengming.setImageResource(R.drawable.dakaibaojing);
             }
-            //灯光
+            //光照
             int roadlamp = cgqStatus.getRoadlamp();
             if (roadlamp == 1) {
-                mToggleGuangzhao.setChecked(true);
+                //开
+                mToggleGuangzhao.setImageResource(R.drawable.dakaiguangzhao2);
             } else {
-                mToggleGuangzhao.setChecked(false);
+                //关
+                mToggleGuangzhao.setImageResource(R.drawable.dakaiguangzhao);
             }
+        }
+    }
+
+
+    /**
+     * 设备状态(范围)
+     */
+    public static void showData(Config config) {
+        String result = config.getResult();
+        if (result.equals("ok")) {
+            mText2.setText("正常光照强度：" + config.getMinLight() + "~" + config.getMaxLight());
+        }
+    }
+
+    /**
+     * 显示数据（当前）
+     */
+    public static void showData(Sensor sensor) {
+        if (sensor.result.equals("ok")) {
+            mText1.setText("当前光照强度：" + sensor.light);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.frag_sunny_guangzhao:
+                //光照
+                int roadlamp = status.getRoadlamp();
+                if (roadlamp == 1) {
+                    ContentActivity.control(Utils.KZ_DENGGUANG_GUAN);
+                } else {
+                    ContentActivity.control(Utils.KZ_DENGGUANG_KAI);
+                }
+                break;
+            case R.id.frag_sunny_fengming:
+                int buzzer = status.getBuzzer();
+                //蜂鸣
+                if (buzzer == 1) {
+                    ContentActivity.control(Utils.KZ_FENGMING_GUAN);
+                } else {
+                    ContentActivity.control(Utils.KZ_FENGMING_KAI);
+                }
+                break;
+
         }
     }
 }

@@ -21,6 +21,34 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/d_text_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="当前空气温度：32"
+                android:textColor="#e78642"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/d_text_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="温度设定范围：32"
+                android:textColor="#e78642"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -30,23 +58,26 @@
             android:padding="20dp">
 
             <TextView
+                android:id="@+id/d_text_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="当前CO2浓度：32"
+                android:gravity="center_vertical"
+                android:text="当前空气温度：32"
                 android:textColor="#e78642"
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/d_text_4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="CO2设定范围：20 ~ 179"
+                android:gravity="center_vertical"
+                android:text="湿度设定范围：32"
                 android:textColor="#e78642"
                 android:textSize="15sp" />
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -54,29 +85,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ToggleButton
+        <ImageView
             android:id="@+id/frag_kq_fengshan"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/toggle__fengshan"
-            android:scaleType="fitXY"
-            android:textOff=""
-            android:textOn="" />
+            android:background="@drawable/dakaifengshan"
+            android:scaleType="fitXY" />
 
         <View
             android:layout_width="20dp"
             android:layout_height="1dp" />
 
-        <ToggleButton
+        <ImageView
             android:id="@+id/frag_kq_guangzhao"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/toggle__dengguang"
-            android:scaleType="fitXY"
-            android:textOff=""
-            android:textOn="" />
+            android:background="@drawable/dakaiguangzhao"
+            android:scaleType="fitXY" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,29 +111,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ToggleButton
+        <ImageView
             android:id="@+id/frag_kq_shuibeng"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/toggle__shuibeng"
-            android:scaleType="fitXY"
-            android:textOff=""
-            android:textOn="" />
+            android:background="@drawable/dakaishui"
+            android:scaleType="fitXY" />
 
         <View
             android:layout_width="20dp"
             android:layout_height="1dp" />
 
-        <ToggleButton
+        <ImageView
             android:id="@+id/frag_kq_fengming"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/toggle__fengming"
-            android:scaleType="fitXY"
-            android:textOff=""
-            android:textOn="" />
+            android:background="@drawable/dakaibaojing"
+            android:scaleType="fitXY" />
     </LinearLayout>
 
 </LinearLayout>

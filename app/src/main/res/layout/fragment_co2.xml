@@ -29,44 +29,41 @@
             android:padding="20dp">
 
             <TextView
+                android:id="@+id/a_text_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="当前CO2浓度：32"
                 android:textColor="#e78642"
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/a_text_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="CO2设定范围：20 ~ 179"
                 android:textColor="#e78642"
                 android:textSize="15sp" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <ToggleButton
+    <ImageView
         android:id="@+id/frag_co2_fengshan"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/toggle__fengshan"
+        android:background="@drawable/dakaifengshan"
         android:scaleType="fitXY"
-        android:textOff=""
-        android:textOn="" />
+ />
 
-    <ToggleButton
+    <ImageView
         android:id="@+id/frag_co2_fengming"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/toggle__fengming"
-        android:scaleType="fitXY"
-        android:textOff=""
-        android:textOn="" />
+        android:background="@drawable/dakaibaojing"
+        android:scaleType="fitXY" />
 
 </LinearLayout>

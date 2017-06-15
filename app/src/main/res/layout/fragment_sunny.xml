@@ -30,44 +30,40 @@
             android:padding="20dp">
 
             <TextView
+                android:id="@+id/b_text_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="当前光照强度：32"
                 android:textColor="#e78642"
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/b_text_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="正常光照强度：20 ~ 179"
                 android:textColor="#e78642"
                 android:textSize="15sp" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <ToggleButton
+    <ImageView
         android:id="@+id/frag_sunny_guangzhao"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/toggle__dengguang"
-        android:scaleType="fitXY"
-        android:textOff=""
-        android:textOn="" />
+        android:background="@drawable/dakaiguangzhao"
+        android:scaleType="fitXY" />
 
-    <ToggleButton
+    <ImageView
         android:id="@+id/frag_sunny_fengming"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/toggle__fengming"
-        android:scaleType="fitXY"
-        android:textOff=""
-        android:textOn="" />
+        android:background="@drawable/dakaibaojing"
+        android:scaleType="fitXY" />
 
 </LinearLayout>

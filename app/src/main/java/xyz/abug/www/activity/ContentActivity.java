@@ -1,35 +1,37 @@
 package xyz.abug.www.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import xyz.abug.www.fragment.CO2Fragment;
 import xyz.abug.www.fragment.KqFragment;
 import xyz.abug.www.fragment.SunnyFragment;
 import xyz.abug.www.fragment.TrFragment;
 import xyz.abug.www.gson.CGQStatus;
+import xyz.abug.www.gson.Config;
+import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
+import xyz.abug.www.service.GetJsonServer;
+import xyz.abug.www.service.GetStatusService;
 import xyz.abug.www.utils.HttpUtils;
 import xyz.abug.www.utils.Utility;
 import xyz.abug.www.utils.Utils;
 
-import static xyz.abug.www.utils.Utils.mIP;
+import static xyz.abug.www.utils.Utils.CAST_CONFIG;
+import static xyz.abug.www.utils.Utils.CAST_SENSOR;
+import static xyz.abug.www.utils.Utils.CAST_STATUS;
 
 public class ContentActivity extends AppCompatActivity {
 
@@ -40,14 +42,19 @@ public class ContentActivity extends AppCompatActivity {
     private TextView mTextTitle;
     private ImageButton mBtnBack;
     private static Activity mMyContext;
+    private MyCast mMyCast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
         bindID();
-        //获取设备状态
-        getStatus();
+//        //获取设备状态
+//        getStatus();
+        //启动广播
+        cast();
+        //启动service
+        service();
         mMyContext = ContentActivity.this;
         mManager = getSupportFragmentManager();
         mTransaction = mManager.beginTransaction();
@@ -78,6 +85,34 @@ public class ContentActivity extends AppCompatActivity {
                 break;
         }
         mTransaction.commit();
+    }
+
+    /**
+     * 启动广播
+     */
+    private void cast() {
+        if (mMyCast == null) {
+            mMyCast = new MyCast();
+        }
+        IntentFilter filter = new IntentFilter(CAST_STATUS);
+        filter.addAction(CAST_SENSOR);
+        filter.addAction(CAST_CONFIG);
+        registerReceiver(mMyCast, filter);
+    }
+
+    /**
+     * 启动服务
+     */
+    private void service() {
+        Intent intent = new Intent(ContentActivity.this, GetStatusService.class);
+        startService(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent1 = new Intent(ContentActivity.this, GetJsonServer.class);
+        startService(intent1);
     }
 
     private void bindID() {
@@ -114,7 +149,7 @@ public class ContentActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (b) {
-                            Toast.makeText(mMyContext, "ok", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mMyContext, "ok", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -122,34 +157,22 @@ public class ContentActivity extends AppCompatActivity {
         }.start();
     }
 
-    /**
-     * 获取当前的状态
-     */
-    private void getStatus() {
-        RequestBody body = new FormBody.Builder().add("", "").build();
-        HttpUtils.sendQuestBackResponse(Utils.URL_GET_HTTP_HEAD + mIP + Utils.URL_GET_STATUS, body, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String string = response.body().string();
-                Utils.logData("获取到设备状态：" + string);
-                final CGQStatus cgqStatus = Utility.jsonStatus(string);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showDataStatus(cgqStatus);
-                    }
-                });
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent(ContentActivity.this, GetStatusService.class);
+        stopService(intent);
+        intent = null;
+        intent = new Intent(ContentActivity.this, GetStatusService.class);
+        stopService(intent);
+        //取消广播
+        if (mMyCast != null)
+            unregisterReceiver(mMyCast);
     }
 
+
     /**
-     * 显示数据
+     * 显示数据(开关按钮)
      */
     private void showDataStatus(CGQStatus cgqStatus) {
         switch (mInt) {
@@ -172,5 +195,90 @@ public class ContentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 显示数据(范围变化)
+     */
+    private void showDataStatus(Config config) {
+        switch (mInt) {
+            case 1:
+                //CO2浓度
+                CO2Fragment.showData(config);
+                break;
+            case 2:
+                //光照强度
+                SunnyFragment.showData(config);
+                break;
+            case 3:
+                //土壤指数
+                TrFragment.showData(config);
+                break;
+            case 4:
+                //空气指数
+                KqFragment.showData(config);
+                break;
+        }
+    }
+
+    /**
+     * 显示数据(范围变化)
+     */
+    private void showDataStatus(Sensor sensor) {
+        switch (mInt) {
+            case 1:
+                //CO2浓度
+                CO2Fragment.showData(sensor);
+                break;
+            case 2:
+                //光照强度
+                SunnyFragment.showData(sensor);
+                break;
+            case 3:
+                //土壤指数
+                TrFragment.showData(sensor);
+                break;
+            case 4:
+                //空气指数
+                KqFragment.showData(sensor);
+                break;
+        }
+    }
+
+    private class MyCast extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Utils.CAST_STATUS)) {
+                //设备状态
+                String asd = intent.getStringExtra("asd");
+                CGQStatus cgqStatus = Utility.jsonStatus(asd);
+                Log.e("tag", cgqStatus.getResult());
+                if (cgqStatus != null) {
+                    showDataStatus(cgqStatus);
+                }
+            } else if (action.equals(Utils.CAST_CONFIG)) {
+                //范围
+                String data = intent.getStringExtra("data");
+                Utils.logData("广播接受到阈值数据：" + data);
+                Config config = Utility.jsonConfig(data);
+                if (config.getResult().equals("failed")) {
+                    return;
+                }
+                showDataStatus(config);
+
+            } else if (action.equals(Utils.CAST_SENSOR)) {
+                //数值
+                String data = intent.getStringExtra("data");
+                Utils.logData("广播接受到传感器数据：" + data);
+                Sensor sensor = Utility.jsonSensor(data);
+                if (sensor.result.equals("failed")) {
+                    return;
+                }
+                showDataStatus(sensor);
+
+            }
+        }
+    }
 }
 

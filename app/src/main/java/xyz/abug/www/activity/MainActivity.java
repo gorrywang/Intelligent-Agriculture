@@ -51,11 +51,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindID();
-        regBroad();
         init();
-        startMyService();
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        regBroad();
+        startMyService();
+    }
 
     /**
      * 注册广播
@@ -261,11 +266,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         //关闭服务
-        Utils.mIsGetData = false;
         Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
         stopService(intent);
         //关闭广播
@@ -273,10 +278,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             unregisterReceiver(mMyBroadCast);
     }
 
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        Utils.mIsGetData = true;
         regBroad();
         startMyService();
 
@@ -291,7 +296,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mMyBroadCast != null)
                 unregisterReceiver(mMyBroadCast);
         }
-        Utils.mIsGetData = false;
         Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
         stopService(intent);
     }
