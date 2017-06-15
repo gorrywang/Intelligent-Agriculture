@@ -107,6 +107,9 @@ public class SunnyFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (status == null) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.frag_sunny_guangzhao:
                 //光照

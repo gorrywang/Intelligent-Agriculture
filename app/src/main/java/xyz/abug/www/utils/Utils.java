@@ -11,6 +11,10 @@ import okhttp3.MediaType;
 
 public class Utils {
     /**
+     * 是否有网络
+     */
+    public static boolean STATUS_NETWORK =true;
+    /**
      * 各类控制代码
      */
     public static final String KZ_DENGGUANG_KAI = "{\"Roadlamp\":1}";

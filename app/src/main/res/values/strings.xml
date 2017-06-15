@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">"Intelligent Agriculture "</string>
+    <string name="app_name">"智能农业"</string>
     <string name="title_activity_dialog">DialogActivity</string>
 </resources>

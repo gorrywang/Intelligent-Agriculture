@@ -4,6 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.trycatch.mysnackbar.Prompt;
+import com.trycatch.mysnackbar.TSnackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +37,10 @@ import xyz.abug.www.service.GetJsonServer;
 import xyz.abug.www.utils.Utility;
 import xyz.abug.www.utils.Utils;
 
+import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static xyz.abug.www.utils.Utils.CAST_CONFIG;
 import static xyz.abug.www.utils.Utils.CAST_SENSOR;
+import static xyz.abug.www.utils.Utils.STATUS_NETWORK;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout mLinearHome, mLinearHelp, mLinearSetting;
@@ -44,15 +53,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyFragmentPagerAdapter mFragmentAdapter;
     private ViewPager mViewPager;
     private TextView mTextTitle;
+    //刷新广播
     private MyBroadCast mMyBroadCast;
+    //网络广播
+    private NetWorkBroadcast mNetWorkBroadcast;
+    //为提示使用
+    private LinearLayout mLinear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ui();
         bindID();
         init();
 
+    }
+
+    private void ui() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -66,6 +91,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 注册广播
      */
     private void regBroad() {
+        //网络广播
+        if (mNetWorkBroadcast == null) {
+            mNetWorkBroadcast = new NetWorkBroadcast();
+        }
+        IntentFilter intentFilter1 = new IntentFilter(CONNECTIVITY_ACTION);
+        registerReceiver(mNetWorkBroadcast, intentFilter1);
+
+
+        //数据广播
         if (mMyBroadCast == null) {
             mMyBroadCast = new MyBroadCast();
         }
@@ -125,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 绑定ID
      */
     private void bindID() {
+        mLinear = (LinearLayout) findViewById(R.id.main_linear_load);
         mTextTitle = (TextView) findViewById(R.id.main_toolbar_title);
         mLinearHome = (LinearLayout) findViewById(R.id.main_linear_home);
         mLinearSetting = (LinearLayout) findViewById(R.id.main_linear_setting);
@@ -329,6 +364,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 //显示数据
                 HomeFragment.showDataSensor(sensor);
+            }
+        }
+    }
+
+
+    private static boolean mBool = true;
+
+    /**
+     * 网络广播
+     */
+    class NetWorkBroadcast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(CONNECTIVITY_ACTION)) {
+                //监听网络
+                //得到网络连接管理器
+                ConnectivityManager connectionManager = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                //通过管理器得到网络实例
+                NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+                //判断是否连接
+                if (networkInfo != null && networkInfo.isAvailable()) {
+                    mBool = true;
+                    if (STATUS_NETWORK != mBool) {
+                        STATUS_NETWORK = true;
+                        TSnackbar.make(mLinear, "网络已连接", TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(Prompt.SUCCESS).show();
+                    }
+                } else {
+                    mBool = false;
+                    if (STATUS_NETWORK != mBool) {
+                        STATUS_NETWORK = false;
+                        TSnackbar.make(mLinear, "网络未连接", TSnackbar.LENGTH_LONG, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(Prompt.WARNING).show();
+                    }
+                }
             }
         }
     }

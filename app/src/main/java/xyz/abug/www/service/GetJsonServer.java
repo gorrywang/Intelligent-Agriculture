@@ -60,39 +60,43 @@ public class GetJsonServer extends Service {
             public void run() {
                 RequestBody body = new FormBody.Builder().add("", "").build();
                 while (Utils.mIsGetData) {
-                    //获取传感器数据
-                    HttpUtils.sendQuestBackResponse(URL_GET_HTTP_HEAD + mIP + URL_GET_SENSOR, body, new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Utils.logData("传感器数值：后台获取数据错误");
-                        }
+                    if (!Utils.STATUS_NETWORK) {
 
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String data = response.body().string();
-                            Utils.logData("传感器数值：后台获取数据：" + data);
-                            Intent intent = new Intent(CAST_SENSOR);
-                            intent.putExtra("data", data);
-                            sendBroadcast(intent);
-                        }
-                    });
+                    } else {
+                        //获取传感器数据
+                        HttpUtils.sendQuestBackResponse(URL_GET_HTTP_HEAD + mIP + URL_GET_SENSOR, body, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Utils.logData("传感器数值：后台获取数据错误");
+                            }
 
-                    //获取传感器数据
-                    HttpUtils.sendQuestBackResponse(URL_GET_HTTP_HEAD + mIP + URL_GET_CONFIG, body, new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Utils.logData("传感器阈值：后台获取数据错误");
-                        }
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String data = response.body().string();
+                                Utils.logData("传感器数值：后台获取数据：" + data);
+                                Intent intent = new Intent(CAST_SENSOR);
+                                intent.putExtra("data", data);
+                                sendBroadcast(intent);
+                            }
+                        });
 
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String data = response.body().string();
-                            Utils.logData("传感器阈值：后台获取数据：" + data);
-                            Intent intent = new Intent(CAST_CONFIG);
-                            intent.putExtra("data", data);
-                            sendBroadcast(intent);
-                        }
-                    });
+                        //获取传感器数据
+                        HttpUtils.sendQuestBackResponse(URL_GET_HTTP_HEAD + mIP + URL_GET_CONFIG, body, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Utils.logData("传感器阈值：后台获取数据错误");
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String data = response.body().string();
+                                Utils.logData("传感器阈值：后台获取数据：" + data);
+                                Intent intent = new Intent(CAST_CONFIG);
+                                intent.putExtra("data", data);
+                                sendBroadcast(intent);
+                            }
+                        });
+                    }
 
                     //睡眠
                     try {

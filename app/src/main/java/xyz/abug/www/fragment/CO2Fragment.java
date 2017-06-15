@@ -108,6 +108,9 @@ public class CO2Fragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (status == null) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.frag_co2_fengming:
                 int buzzer = status.getBuzzer();

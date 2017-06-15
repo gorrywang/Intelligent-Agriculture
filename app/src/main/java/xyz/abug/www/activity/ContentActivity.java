@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.trycatch.mysnackbar.Prompt;
+import com.trycatch.mysnackbar.TSnackbar;
 
 import xyz.abug.www.fragment.CO2Fragment;
 import xyz.abug.www.fragment.KqFragment;
@@ -39,7 +44,7 @@ public class ContentActivity extends AppCompatActivity {
     private FragmentManager mManager;
     private FragmentTransaction mTransaction;
     private static int mInt;
-    private TextView mTextTitle;
+    private static TextView mTextTitle;
     private ImageButton mBtnBack;
     private static Activity mMyContext;
     private MyCast mMyCast;
@@ -48,6 +53,7 @@ public class ContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
+        ui();
         bindID();
 //        //获取设备状态
 //        getStatus();
@@ -85,6 +91,16 @@ public class ContentActivity extends AppCompatActivity {
                 break;
         }
         mTransaction.commit();
+    }
+
+    private void ui() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     /**
@@ -150,6 +166,11 @@ public class ContentActivity extends AppCompatActivity {
                     public void run() {
                         if (b) {
 //                            Toast.makeText(mMyContext, "ok", Toast.LENGTH_SHORT).show();
+                            TSnackbar.make(mTextTitle, "设置成功", TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(Prompt.SUCCESS).show();
+
+                        } else {
+                            TSnackbar.make(mTextTitle, "设置失败", TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(Prompt.ERROR).show();
+
                         }
                     }
                 });
@@ -265,7 +286,9 @@ public class ContentActivity extends AppCompatActivity {
                 if (config.getResult().equals("failed")) {
                     return;
                 }
-                showDataStatus(config);
+                if (config != null) {
+                    showDataStatus(config);
+                }
 
             } else if (action.equals(Utils.CAST_SENSOR)) {
                 //数值
@@ -275,7 +298,9 @@ public class ContentActivity extends AppCompatActivity {
                 if (sensor.result.equals("failed")) {
                     return;
                 }
-                showDataStatus(sensor);
+                if (sensor != null) {
+                    showDataStatus(sensor);
+                }
 
             }
         }

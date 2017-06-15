@@ -43,26 +43,29 @@ public class GetStatusService extends Service {
             public void run() {
                 RequestBody body = new FormBody.Builder().add("", "").build();
                 while (mBool) {
-                    HttpUtils.sendQuestBackResponse(Utils.URL_GET_HTTP_HEAD + mIP + Utils.URL_GET_STATUS, body, new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
+                    if (!Utils.STATUS_NETWORK) {
+                    } else {
+                        HttpUtils.sendQuestBackResponse(Utils.URL_GET_HTTP_HEAD + mIP + Utils.URL_GET_STATUS, body, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String string = response.body().string();
-                            Utils.logData("获取到设备状态：" + string);
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String string = response.body().string();
+                                Utils.logData("获取到设备状态：" + string);
 //                            final CGQStatus cgqStatus = Utility.jsonStatus(string);
-                            Intent intent = new Intent(Utils.CAST_STATUS);
-                            intent.putExtra("asd", string);
-                            sendBroadcast(intent);
+                                Intent intent = new Intent(Utils.CAST_STATUS);
+                                intent.putExtra("asd", string);
+                                sendBroadcast(intent);
+                            }
+                        });
+                        try {
+                            sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    });
-                    try {
-                        sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
             }
