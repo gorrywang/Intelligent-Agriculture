@@ -23,6 +23,7 @@ import java.util.List;
 import xyz.abug.www.fragment.HelpFragment;
 import xyz.abug.www.fragment.HomeFragment;
 import xyz.abug.www.fragment.SettingFragment;
+import xyz.abug.www.gson.Config;
 import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
 import xyz.abug.www.service.GetJsonServer;
@@ -50,10 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindID();
-        init();
         regBroad();
+        init();
         startMyService();
     }
+
 
     /**
      * 注册广播
@@ -266,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             unregisterReceiver(mMyBroadCast);
     }
 
+
     /**
      * 广播接收服务返回的数据
      */
@@ -278,15 +281,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (action.equals(CAST_CONFIG)) {
                 String data = intent.getStringExtra("data");
                 Utils.logData("广播接受到阈值数据：" + data);
+                Config config = Utility.jsonConfig(data);
+                if (config.getResult().equals("failed")) {
+                    return;
+                }
+                HomeFragment.showDataConfig(config);
 
             } else if (action.equals(CAST_SENSOR)) {
                 //传感器
                 String data = intent.getStringExtra("data");
                 Utils.logData("广播接受到传感器数据：" + data);
                 Sensor sensor = Utility.jsonSensor(data);
+                if (sensor.result.equals("failed")) {
+                    return;
+                }
+                //显示数据
                 HomeFragment.showDataSensor(sensor);
             }
         }
     }
+
 
 }

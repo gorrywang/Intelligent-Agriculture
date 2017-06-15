@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="请输入IP地址"
-                    android:text="10.44.1.104"
+                    android:text="10.44.1.102"
                     android:padding="12dp"
                     android:singleLine="true" />
 

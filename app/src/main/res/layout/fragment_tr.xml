@@ -75,38 +75,44 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <ToggleButton
+        android:id="@+id/frag_tr_guangzhao"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@null"
+        android:background="@drawable/toggle__dengguang"
         android:scaleType="fitXY"
-        android:src="@drawable/dakaiguangzhao" />
+        android:textOff=""
+        android:textOn="" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ToggleButton
+            android:id="@+id/frag_tr_shuibeng"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="@null"
+            android:background="@drawable/toggle__shuibeng"
             android:scaleType="fitXY"
-            android:src="@drawable/dakaishui" />
+            android:textOff=""
+            android:textOn="" />
 
         <View
             android:layout_width="20dp"
             android:layout_height="1dp" />
 
-        <ImageButton
+        <ToggleButton
+            android:id="@+id/frag_tr_fengming"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="@null"
+            android:background="@drawable/toggle__fengming"
             android:scaleType="fitXY"
-            android:src="@drawable/dakaibaojing" />
+            android:textOff=""
+            android:textOn="" />
     </LinearLayout>
 
 </LinearLayout>

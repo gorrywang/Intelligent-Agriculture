@@ -2,6 +2,8 @@ package xyz.abug.www.utils;
 
 import android.util.Log;
 
+import okhttp3.MediaType;
+
 /**
  * Created by Dell on 2017/6/5.
  * 工具类
@@ -9,13 +11,31 @@ import android.util.Log;
 
 public class Utils {
     /**
+     * 各类控制代码
+     */
+    public static final String KZ_DENGGUANG_KAI = "{\"Roadlamp\":1}";
+    public static final String KZ_DENGGUANG_GUAN = "{\"Roadlamp\":0}";
+
+    public static final String KZ_SHUIBENG_KAI = "{\"WaterPump\":1}";
+    public static final String KZ_SHUIBENG_GUAN = "{\"WaterPump\":0}";
+
+    public static final String KZ_FENGMING_KAI = "{\"Buzzer\":1}";
+    public static final String KZ_FENGMING_GUAN = "{\"Buzzer\":0}";
+
+    public static final String KZ_FENGSHAN_KAI = "{\"Blower\":1}";
+    public static final String KZ_FENGSHAN_GUAN = "{\"Blower\":0}";
+    /**
+     * POST传参格式类型
+     */
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    /**
      * 传感器数据广播
      */
-    public static final String CAST_SENSOR ="xyz.abug.www.znyy";
+    public static final String CAST_SENSOR = "xyz.abug.www.znyy";
     /**
      * 获取到阈值广播
      */
-    public static final String CAST_CONFIG ="xyz.abug.www.znyy.yz";
+    public static final String CAST_CONFIG = "xyz.abug.www.znyy.yz";
     /**
      * 程序结束后关闭获取数据
      */
@@ -33,6 +53,14 @@ public class Utils {
      * http开头
      */
     public static final String URL_GET_HTTP_HEAD = "http://";
+    /**
+     * 设备的状态
+     */
+    public static final String URL_GET_STATUS = ":8890/type/jason/action/getContorllerStatus";
+    /**
+     * 控制协议
+     */
+    public static final String URL_SET_CONTROL = ":8890/type/jason/action/control";
     /**
      * 获取传感器的数值
      * http://192.168.1.119:8890/type/jason/action/getSensor

@@ -49,20 +49,24 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <ToggleButton
+        android:id="@+id/frag_co2_fengshan"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@null"
+        android:background="@drawable/toggle__fengshan"
         android:scaleType="fitXY"
-        android:src="@drawable/dakaifengshan" />
+        android:textOff=""
+        android:textOn="" />
 
-    <ImageButton
+    <ToggleButton
+        android:id="@+id/frag_co2_fengming"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:background="@null"
+        android:background="@drawable/toggle__fengming"
         android:scaleType="fitXY"
-        android:src="@drawable/dakaibaojing" />
+        android:textOff=""
+        android:textOn="" />
 
 </LinearLayout>
