@@ -37,13 +37,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="空气温度值："
+                android:text="光照强度："
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/frag_set_sunny_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200"
                 android:textColor="#0057ff"
                 android:textSize="16sp" />
 
@@ -55,10 +55,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="空气温度当前状态"
+                android:text="光照强度当前状态"
                 android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/frag_set_sunny_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/p1" />
@@ -89,10 +90,10 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/frag_set_sunny_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="200"
                 android:textColor="#0057ff"
                 android:textSize="16sp" />
 
@@ -109,10 +110,10 @@
 
 
             <EditText
+                android:id="@+id/frag_set_sunny_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="200"
                 android:textColor="#0057ff"
                 android:textSize="16sp" />
 
@@ -133,123 +134,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp" />
-
-    <View
-        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#eeeeee" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="空气湿度值："
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="200"
-                android:textColor="#0057ff"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="空气湿度当前状态"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/p1" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="最小值"
-                android:textSize="16sp" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="200"
-                android:textColor="#0057ff"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="最大值"
-                android:textSize="16sp" />
-
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="200"
-                android:textColor="#0057ff"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -267,6 +153,7 @@
         android:background="#eeeeee" />
 
     <Button
+        android:id="@+id/frag_set_sunny_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"

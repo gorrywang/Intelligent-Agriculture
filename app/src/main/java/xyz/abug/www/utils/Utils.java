@@ -62,6 +62,10 @@ public class Utils {
      */
     public static final String URL_SET_CONTROL = ":8890/type/jason/action/control";
     /**
+     * 设置范围
+     */
+    public static final String URL_SET_MAXMIN = ":8890/type/jason/action/setConfig";
+    /**
      * 获取传感器的数值
      * http://192.168.1.119:8890/type/jason/action/getSensor
      * {"result":"ok","airHumidity":53,"PM25":-1,"airTemperature":29,"soilTemperature":32,"co2":75,"soilHumidity":59,"light":1724}

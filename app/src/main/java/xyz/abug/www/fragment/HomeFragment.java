@@ -1,11 +1,12 @@
 package xyz.abug.www.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     };
 
+    private static SharedPreferences mSp;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         bindID();
+        mSp = getContext().getSharedPreferences("sp", Context.MODE_PRIVATE);
         addPic();
         initPager();
         //开启轮播

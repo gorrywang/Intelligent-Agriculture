@@ -37,11 +37,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="土壤温度值："
+                android:text="空气温度值："
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/frag_set_tr_text1"
+                android:id="@+id/frag_set_kq_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#0057ff"
@@ -55,11 +55,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="土壤温度当前状态"
+                android:text="空气温度当前状态"
                 android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/frag_set_tr_img1"
+                android:id="@+id/frag_set_kq_img1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/p1" />
@@ -90,7 +90,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/frag_set_tr_wd_min"
+                android:id="@+id/frag_set_kq_wd_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -110,7 +110,7 @@
 
 
             <EditText
-                android:id="@+id/frag_set_tr_wd_max"
+                android:id="@+id/frag_set_kq_wd_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -164,11 +164,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="土壤湿度值："
+                android:text="空气湿度值："
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/frag_set_tr_text2"
+                android:id="@+id/frag_set_kq_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#0057ff"
@@ -182,11 +182,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="土壤湿度当前状态"
+                android:text="空气湿度当前状态"
                 android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/frag_set_tr_img2"
+                android:id="@+id/frag_set_kq_img2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/p1" />
@@ -217,7 +217,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/frag_set_tr_sd_min"
+                android:id="@+id/frag_set_kq_sd_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -237,7 +237,7 @@
 
 
             <EditText
-                android:id="@+id/frag_set_tr_sd_max"
+                android:id="@+id/frag_set_kq_sd_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -269,7 +269,7 @@
         android:background="#eeeeee" />
 
     <Button
-        android:id="@+id/frag_set_tr_btn"
+        android:id="@+id/frag_set_kq_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"

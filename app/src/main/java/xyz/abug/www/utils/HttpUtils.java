@@ -19,6 +19,7 @@ import okhttp3.Response;
 
 import static xyz.abug.www.utils.Utils.JSON;
 import static xyz.abug.www.utils.Utils.URL_SET_CONTROL;
+import static xyz.abug.www.utils.Utils.URL_SET_MAXMIN;
 import static xyz.abug.www.utils.Utils.mAlertTime;
 import static xyz.abug.www.utils.Utils.mIP;
 
@@ -54,6 +55,34 @@ public class HttpUtils {
         OkHttpClient client = new OkHttpClient.Builder().readTimeout(mAlertTime, TimeUnit.SECONDS).writeTimeout(mAlertTime, TimeUnit.SECONDS).connectTimeout(mAlertTime, TimeUnit.SECONDS).build();
         //请求
         final Request request = new Request.Builder().url(Utils.URL_GET_HTTP_HEAD + mIP + URL_SET_CONTROL).post(body).build();
+        //发送请求
+        JSONObject jsonObject;
+        try {
+            Response execute = client.newCall(request).execute();
+            String string = execute.body().string();
+            jsonObject = new JSONObject(string);
+            String result = jsonObject.getString("result");
+            if (result.equals("ok")) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    /**
+     * 设置范围
+     */
+    public static boolean controlMAXMIN(String json) {
+        RequestBody body = RequestBody.create(JSON, json);
+        //客户端
+        OkHttpClient client = new OkHttpClient.Builder().readTimeout(mAlertTime, TimeUnit.SECONDS).writeTimeout(mAlertTime, TimeUnit.SECONDS).connectTimeout(mAlertTime, TimeUnit.SECONDS).build();
+        //请求
+        final Request request = new Request.Builder().url(Utils.URL_GET_HTTP_HEAD + mIP + URL_SET_MAXMIN).post(body).build();
         //发送请求
         JSONObject jsonObject;
         try {

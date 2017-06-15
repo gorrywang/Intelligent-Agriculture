@@ -41,9 +41,9 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/frag_set_co2_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200"
                 android:textColor="#0057ff"
                 android:textSize="16sp" />
 
@@ -59,6 +59,7 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/frag_set_co2_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/p1" />
@@ -89,10 +90,11 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/frag_set_co2_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:singleLine="true"
-                android:text="200"
                 android:textColor="#0057ff"
                 android:textSize="16sp" />
 
@@ -109,10 +111,11 @@
 
 
             <EditText
+                android:id="@+id/frag_set_co2_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:singleLine="true"
-                android:text="200"
                 android:textColor="#0057ff"
                 android:textSize="16sp" />
 
@@ -141,6 +144,7 @@
         android:background="#eeeeee" />
 
     <Button
+        android:id="@+id/frag_set_co2_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"

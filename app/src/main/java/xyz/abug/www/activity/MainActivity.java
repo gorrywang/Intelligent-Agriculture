@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 注册广播
      */
     private void regBroad() {
-        mMyBroadCast = new MyBroadCast();
+        if (mMyBroadCast == null) {
+            mMyBroadCast = new MyBroadCast();
+        }
         IntentFilter intentFilter = new IntentFilter(CAST_SENSOR);
         intentFilter.addAction(CAST_CONFIG);
         registerReceiver(mMyBroadCast, intentFilter);
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 启动服务
      */
+
     private void startMyService() {
         Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
         startService(intent);
@@ -259,13 +262,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
+        //关闭服务
         Utils.mIsGetData = false;
         Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
         stopService(intent);
+        //关闭广播
         if (mMyBroadCast != null)
             unregisterReceiver(mMyBroadCast);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Utils.mIsGetData = true;
+        regBroad();
+        startMyService();
+
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (Utils.mIsGetData) {
+            if (mMyBroadCast != null)
+                unregisterReceiver(mMyBroadCast);
+        }
+        Utils.mIsGetData = false;
+        Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
+        stopService(intent);
     }
 
 

@@ -55,11 +55,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.setting_linear_kq:
                 //空气
-                i = 2;
+                i = 3;
                 break;
             case R.id.setting_linear_tr:
                 //土壤
-                i = 3;
+                i = 4;
                 break;
         }
         SettingContentActivity.activityJump(SettingActivity.this, i);

@@ -1,5 +1,7 @@
 package xyz.abug.www.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,9 +24,10 @@ import xyz.abug.www.utils.Utils;
 
 /**
  * Created by Dell on 2017/6/6.
+ * 空气设置
  */
 
-public class SettingTrFragment extends Fragment implements View.OnClickListener {
+public class SettingKqFragment extends Fragment implements View.OnClickListener {
     private View mView;
     public static EditText mWdMax, mWdMin, mSdMax, mSdMin;
     private static TextView mText1, mText2;
@@ -34,7 +37,7 @@ public class SettingTrFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_setting_tr, container, false);
+        mView = inflater.inflate(R.layout.fragment_setting_kongqi, container, false);
         return mView;
     }
 
@@ -49,30 +52,33 @@ public class SettingTrFragment extends Fragment implements View.OnClickListener 
      * 绑定id
      */
     private void bindID() {
-        mWdMax = (EditText) mView.findViewById(R.id.frag_set_tr_wd_max);
-        mSdMax = (EditText) mView.findViewById(R.id.frag_set_tr_sd_max);
-        mWdMin = (EditText) mView.findViewById(R.id.frag_set_tr_wd_min);
-        mSdMin = (EditText) mView.findViewById(R.id.frag_set_tr_sd_min);
-        mText1 = (TextView) mView.findViewById(R.id.frag_set_tr_text1);//温度
-        mText2 = (TextView) mView.findViewById(R.id.frag_set_tr_text2);//适度
-        mImg1 = (ImageView) mView.findViewById(R.id.frag_set_tr_img1);
-        mImg2 = (ImageView) mView.findViewById(R.id.frag_set_tr_img2);
-        mBtn = (Button) mView.findViewById(R.id.frag_set_tr_btn);
+        mWdMax = (EditText) mView.findViewById(R.id.frag_set_kq_wd_max);
+        mSdMax = (EditText) mView.findViewById(R.id.frag_set_kq_sd_max);
+        mWdMin = (EditText) mView.findViewById(R.id.frag_set_kq_wd_min);
+        mSdMin = (EditText) mView.findViewById(R.id.frag_set_kq_sd_min);
+        mText1 = (TextView) mView.findViewById(R.id.frag_set_kq_text1);//温度
+        mText2 = (TextView) mView.findViewById(R.id.frag_set_kq_text2);//适度
+        mImg1 = (ImageView) mView.findViewById(R.id.frag_set_kq_img1);
+        mImg2 = (ImageView) mView.findViewById(R.id.frag_set_kq_img2);
+        mBtn = (Button) mView.findViewById(R.id.frag_set_kq_btn);
         mBtn.setOnClickListener(this);
+
     }
 
+    /**
+     * 设置空气阈值
+     */
     public static void showDataYZ(Config config) {
-        mWdMax.setText(config.getMaxSoilTemperature() + "");
-        mWdMin.setText(config.getMinSoilTemperature() + "");
-        mSdMax.setText(config.getMaxSoilHumidity() + "");
-        mSdMin.setText(config.getMinSoilHumidity() + "");
+        mWdMax.setText(config.getMaxAirTemperature() + "");
+        mWdMin.setText(config.getMinAirTemperature() + "");
+        mSdMax.setText(config.getMaxAirHumidity() + "");
+        mSdMin.setText(config.getMinAirHumidity() + "");
     }
 
     public static void showDataSJ(Sensor sensor) {
         mText1.setText(sensor.airTemperature + "");
         mText2.setText(sensor.airHumidity + "");
     }
-
 
     @Override
     public void onClick(View v) {
@@ -98,7 +104,7 @@ public class SettingTrFragment extends Fragment implements View.OnClickListener 
             return;
         }
 
-        final String data = "{\"minSoilTemperature\":" + min_wd + ",\"maxSoilTemperature\":" + max_wd + ",\"minSoilHumidity\":" + min_sd + ",\"maxSoilHumidity\":" + max_sd + "}";
+        final String data = "{\"minAirTemperature\":" + min_wd + ",\"maxAirTemperature\":" + max_wd + ",\"minAirHumidity\":" + min_sd + ",\"maxAirHumidity\":" + max_sd + "}";
         Utils.logData("发送范围数据：" + data);
         //设置数据
         new Thread(new Runnable() {
@@ -124,11 +130,11 @@ public class SettingTrFragment extends Fragment implements View.OnClickListener 
     }
 
     public static void setPic(Sensor mSensor, Config mConfig) {
-        //设置土壤温度
-        boolean b1 = SetUtils.startCompare(mSensor.soilTemperature, mConfig.getMinSoilTemperature(), mConfig.getMaxSoilTemperature());
+        //设置空气温度
+        boolean b1 = SetUtils.startCompare(mSensor.airTemperature, mConfig.getMinAirTemperature(), mConfig.getMaxAirTemperature());
         SetUtils.setPic(b1, mImg1);
-        //设置土壤适度
-        boolean b2 = SetUtils.startCompare(mSensor.soilHumidity, mConfig.getMinSoilHumidity(), mConfig.getMaxSoilHumidity());
+        //设置空气适度
+        boolean b2 = SetUtils.startCompare(mSensor.airHumidity, mConfig.getMinAirHumidity(), mConfig.getMaxAirHumidity());
         SetUtils.setPic(b2, mImg2);
     }
 }

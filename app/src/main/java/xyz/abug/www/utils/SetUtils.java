@@ -1,5 +1,7 @@
 package xyz.abug.www.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.ImageView;
 
 import xyz.abug.www.intelligentagriculture.R;
@@ -14,7 +16,7 @@ public class SetUtils {
     /**
      * 设置图片
      */
-    public static void setPic(boolean b, ImageView imageView) {
+    public static void setPic( boolean b, ImageView imageView) {
         if (b) {
             imageView.setImageResource(R.drawable.p1);
         } else {
