@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.trycatch.mysnackbar.Prompt;
+import com.trycatch.mysnackbar.TSnackbar;
 import com.tuyenmonkey.mkloader.MKLoader;
 
 import java.util.regex.Matcher;
@@ -101,7 +102,9 @@ public class SplashActivity extends AppCompatActivity {
             }.start();
         } else {
             //错误
-            Toast.makeText(SplashActivity.this, "请输入合法地址", Toast.LENGTH_SHORT).show();
+            TSnackbar.make(mLinear, "请输入合法ip地址", TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(Prompt.ERROR).show();
+
+//            Toast.makeText(SplashActivity.this, "请输入合法地址", Toast.LENGTH_SHORT).show();
         }
     }
 

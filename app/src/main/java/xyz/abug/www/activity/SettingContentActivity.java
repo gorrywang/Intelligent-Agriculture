@@ -188,7 +188,7 @@ public class SettingContentActivity extends AppCompatActivity {
                     showDataSJ(sensor);
                 }
             }
-            Log.e("tag", "a=" + a + ",b=" + b);
+            Utils.logData("a=" + a + ",b=" + b);
         }
     }
 

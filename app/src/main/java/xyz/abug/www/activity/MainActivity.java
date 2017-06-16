@@ -339,6 +339,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mMyBroadCast != null)
                 unregisterReceiver(mMyBroadCast);
         }
+
+        if (mNetWorkBroadcast != null)
+            unregisterReceiver(mNetWorkBroadcast);
+
         //轮播图关闭
         LBT_STATUS = false;
         Intent intent = new Intent(MainActivity.this, GetJsonServer.class);

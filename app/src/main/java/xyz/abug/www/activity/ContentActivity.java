@@ -274,7 +274,6 @@ public class ContentActivity extends AppCompatActivity {
                 //设备状态
                 String asd = intent.getStringExtra("asd");
                 CGQStatus cgqStatus = Utility.jsonStatus(asd);
-                Log.e("tag", cgqStatus.getResult());
                 if (cgqStatus != null) {
                     showDataStatus(cgqStatus);
                 }
