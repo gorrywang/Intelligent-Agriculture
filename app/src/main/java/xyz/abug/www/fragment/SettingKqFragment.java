@@ -1,7 +1,5 @@
 package xyz.abug.www.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.trycatch.mysnackbar.Prompt;
+
+import xyz.abug.www.activity.SettingContentActivity;
 import xyz.abug.www.gson.Config;
 import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
@@ -87,20 +87,23 @@ public class SettingKqFragment extends Fragment implements View.OnClickListener 
         String max_sd = mSdMax.getText().toString().trim();
         String min_sd = mSdMin.getText().toString().trim();
         if (TextUtils.isEmpty(max_wd) || TextUtils.isEmpty(min_wd) || TextUtils.isEmpty(max_sd) || TextUtils.isEmpty(min_sd)) {
-            Toast.makeText(getContext(), "请输入完整数据", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "请输入完整数据", Toast.LENGTH_SHORT).show();
+            SettingContentActivity.showToast("请输入完整数据", Prompt.WARNING);
             return;
         }
         int iMax = Integer.parseInt(max_wd);
         int iMin = Integer.parseInt(min_wd);
         if (iMax <= iMin) {
-            Toast.makeText(getContext(), "数据不符合显示，请检查", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "数据不符合显示，请检查", Toast.LENGTH_SHORT).show();
+            SettingContentActivity.showToast("数据不符合现实，请检查", Prompt.WARNING);
             return;
         }
 
         iMax = Integer.parseInt(max_sd);
         iMin = Integer.parseInt(min_sd);
         if (iMax <= iMin) {
-            Toast.makeText(getContext(), "数据不符合显示，请检查", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "数据不符合显示，请检查", Toast.LENGTH_SHORT).show();
+            SettingContentActivity.showToast("数据不符合现实，请检查", Prompt.WARNING);
             return;
         }
 
@@ -117,10 +120,22 @@ public class SettingKqFragment extends Fragment implements View.OnClickListener 
                     public void run() {
                         if (bool) {
                             //设置成功
-                            getActivity().finish();
+                            SettingContentActivity.showToast("设置成功", Prompt.SUCCESS);
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    getActivity().finish();
+                                }
+                            }.start();
                         } else {
                             //设置失败
-                            Toast.makeText(getContext(), "设置失败，请再次尝试", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "设置失败，请再次尝试", Toast.LENGTH_SHORT).show();
+                            SettingContentActivity.showToast("请再次尝试设置", Prompt.WARNING);
                         }
                     }
                 });

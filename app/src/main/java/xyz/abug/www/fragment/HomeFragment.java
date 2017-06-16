@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-//            Log.e("tag", mViewPager.getCurrentItem() + "");
         }
     };
 
@@ -83,8 +82,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // 开启轮询
         new Thread() {
             public void run() {
-                Utils.mIsGetData = true;
-                while (Utils.mIsGetData) {
+                Utils.LBT_STATUS = true;
+                while (Utils.LBT_STATUS) {
                     try {
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
@@ -92,6 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                     // 往下跳一位
                     mHandler.sendEmptyMessage(1);
+                    Utils.logData("更新图片");
                 }
             }
         }.start();
@@ -234,9 +234,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public static void showDataSensor(Sensor sensor) {
         mTextCO2.setText(sensor.co2 + "");
         mTextGzqd.setText(sensor.light + "");
-        mTextTrwd.setText(sensor.soilTemperature + "");
+        mTextTrwd.setText(sensor.soilTemperature + "°C");
         mTextTrsd.setText(sensor.soilHumidity + "");
-        mTextKqwd.setText(sensor.airTemperature + "");
+        mTextKqwd.setText(sensor.airTemperature + "°C");
         mTextKqsd.setText(sensor.airHumidity + "");
         //判断数据显示图片
         comparePic(sensor);
@@ -249,9 +249,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mConfig = config;
         mTextSSCO2.setText("设定值:" + config.getMinCo2() + "~" + config.getMaxCo2());
         mTextSSGzqd.setText("设定值:" + config.getMinLight() + "~" + config.getMaxLight());
-        mTextSSTrwd.setText("温度值:" + config.getMinSoilTemperature() + "~" + config.getMaxSoilTemperature());
+        mTextSSTrwd.setText("温度值:" + config.getMinSoilTemperature() + "°C~" + config.getMaxSoilTemperature() + "°C");
         mTextSSTrsd.setText("湿度值:" + config.getMinSoilHumidity() + "~" + config.getMaxSoilHumidity());
-        mTextSSKqwd.setText("温度值:" + config.getMinAirTemperature() + "~" + config.getMaxAirTemperature());
+        mTextSSKqwd.setText("温度值:" + config.getMinAirTemperature() + "°C~" + config.getMaxAirTemperature() + "°C");
         mTextSSKqsd.setText("湿度值:" + config.getMinAirHumidity() + "~" + config.getMaxAirHumidity());
     }
 

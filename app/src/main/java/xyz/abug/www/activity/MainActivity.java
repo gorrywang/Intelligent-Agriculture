@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ import xyz.abug.www.utils.Utils;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static xyz.abug.www.utils.Utils.CAST_CONFIG;
 import static xyz.abug.www.utils.Utils.CAST_SENSOR;
+import static xyz.abug.www.utils.Utils.LBT_STATUS;
 import static xyz.abug.www.utils.Utils.STATUS_NETWORK;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,13 +54,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //滑动适配器
     private MyFragmentPagerAdapter mFragmentAdapter;
     private ViewPager mViewPager;
-    private TextView mTextTitle;
+    private static TextView mTextTitle;
     //刷新广播
     private MyBroadCast mMyBroadCast;
     //网络广播
     private NetWorkBroadcast mNetWorkBroadcast;
     //为提示使用
     private LinearLayout mLinear;
+    //底部
+    private static LinearLayout mLinearBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mFragmentAdapter = new MyFragmentPagerAdapter(mFragmentManager);
         mViewPager.setAdapter(mFragmentAdapter);
+        mViewPager.setOffscreenPageLimit(2);
     }
 
 
@@ -160,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void bindID() {
         mLinear = (LinearLayout) findViewById(R.id.main_linear_load);
+        mLinearBar = (LinearLayout) findViewById(R.id.main_linear_bar);
         mTextTitle = (TextView) findViewById(R.id.main_toolbar_title);
         mLinearHome = (LinearLayout) findViewById(R.id.main_linear_home);
         mLinearSetting = (LinearLayout) findViewById(R.id.main_linear_setting);
@@ -299,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void destroyItem(ViewGroup container, int position, Object object) {
 
         }
+
     }
 
 
@@ -311,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //关闭广播
         if (mMyBroadCast != null)
             unregisterReceiver(mMyBroadCast);
+        mMyBroadCast = null;
     }
 
 
@@ -327,10 +335,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (Utils.mIsGetData) {
+        if (!Utils.mIsGetData) {
             if (mMyBroadCast != null)
                 unregisterReceiver(mMyBroadCast);
         }
+        //轮播图关闭
+        LBT_STATUS = false;
         Intent intent = new Intent(MainActivity.this, GetJsonServer.class);
         stopService(intent);
     }
@@ -402,5 +412,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 去掉标题
+     */
+    public static void closeTitle() {
+        mTextTitle.setVisibility(View.GONE);
+        mLinearBar.setVisibility(View.GONE);
+    }
 
+    /**
+     * 显示标题
+     */
+    public static void showTitle() {
+        mTextTitle.setVisibility(View.VISIBLE);
+        mLinearBar.setVisibility(View.VISIBLE);
+    }
+
+    private long clickTime = 0; //记录第一次点击的时间
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - clickTime) > 2000) {
+                TSnackbar.make(mLinear, "再次点击退出软件", TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(Prompt.SUCCESS).show();
+                clickTime = System.currentTimeMillis();
+            } else {
+                this.finish();
+            }
+        }
+        return true;
+    }
 }

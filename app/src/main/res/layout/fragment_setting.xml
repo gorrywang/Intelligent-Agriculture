@@ -17,11 +17,12 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="15dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/zidongkongzhi" />
 
         <TextView
@@ -31,11 +32,11 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="手动控制"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/right" />
 
@@ -54,11 +55,12 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="15dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/qinchuhuancun" />
 
         <TextView
@@ -68,7 +70,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="清除缓存"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -89,11 +91,12 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="15dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/banbengengx" />
 
         <TextView
@@ -103,12 +106,13 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="版本更新"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textSize="16sp"
             android:text="V 2.0" />
 
     </LinearLayout>
@@ -119,16 +123,18 @@
         android:background="#f6f6f6" />
 
     <LinearLayout
+        android:id="@+id/frag_setting_linear_guanyu"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="15dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/guanyuwomen" />
 
         <TextView
@@ -138,34 +144,63 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="关于我们"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/frag_setting_img_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/right" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
+    <LinearLayout
+        android:padding="5dp"
+        android:id="@+id/frag_setting_linear_data"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="#f6f6f6" >
+
+        <ImageView
+            android:padding="8dp"
+            android:src="@drawable/logo"
+            android:layout_width="90dp"
+            android:layout_height="90dp" />
+
+        <TextView
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:text="我是山东劳动职业技术学院2015级联想一班的王高瑞，这是我做的智能农业项目。"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aaa_bbb"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
         android:background="#f6f6f6" />
+
 
     <LinearLayout
         android:id="@+id/frag_setting_linear_tuichu"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="15dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="15dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/my_exit" />
 
         <TextView
@@ -175,7 +210,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="退出登陆"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

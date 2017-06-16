@@ -1,7 +1,5 @@
 package xyz.abug.www.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.trycatch.mysnackbar.Prompt;
+
+import xyz.abug.www.activity.SettingContentActivity;
 import xyz.abug.www.gson.Config;
 import xyz.abug.www.gson.Sensor;
 import xyz.abug.www.intelligentagriculture.R;
@@ -51,7 +51,7 @@ public class SettingCO2Fragment extends Fragment implements View.OnClickListener
      */
     public static void setPic(Sensor mSensor, Config mConfig) {
         boolean b = SetUtils.startCompare(mSensor.co2, mConfig.getMinCo2(), mConfig.getMaxCo2());
-        SetUtils.setPic(b,mImg);
+        SetUtils.setPic(b, mImg);
     }
 
     /**
@@ -87,13 +87,15 @@ public class SettingCO2Fragment extends Fragment implements View.OnClickListener
         String max = mMax.getText().toString().trim();
         String min = mMin.getText().toString().trim();
         if (TextUtils.isEmpty(max) || TextUtils.isEmpty(min)) {
-            Toast.makeText(getContext(), "请输入完整数据", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "请输入完整数据", Toast.LENGTH_SHORT).show();
+            SettingContentActivity.showToast("请输入完整数据", Prompt.WARNING);
             return;
         }
         int iMax = Integer.parseInt(max);
         int iMin = Integer.parseInt(min);
         if (iMax <= iMin) {
-            Toast.makeText(getContext(), "数据不符合显示，请检查", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "数据不符合显示，请检查", Toast.LENGTH_SHORT).show();
+            SettingContentActivity.showToast("数据不符合现实，请检查", Prompt.WARNING);
             return;
         }
         final String data = "{\"minCo2\":" + min + ",\"maxCo2\":" + max + "}";
@@ -108,10 +110,22 @@ public class SettingCO2Fragment extends Fragment implements View.OnClickListener
                     public void run() {
                         if (bool) {
                             //设置成功
-                            getActivity().finish();
+                            SettingContentActivity.showToast("设置成功", Prompt.SUCCESS);
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    getActivity().finish();
+                                }
+                            }.start();
                         } else {
                             //设置失败
-                            Toast.makeText(getContext(), "设置失败，请再次尝试", Toast.LENGTH_SHORT).show();
+                            SettingContentActivity.showToast("请再次尝试设置", Prompt.WARNING);
+
                         }
                     }
                 });

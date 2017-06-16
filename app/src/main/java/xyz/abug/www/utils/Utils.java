@@ -14,6 +14,11 @@ public class Utils {
      * 是否有网络
      */
     public static boolean STATUS_NETWORK =true;
+
+    /**
+     * 轮播图开启与关闭
+     */
+    public static boolean LBT_STATUS =true;
     /**
      * 各类控制代码
      */

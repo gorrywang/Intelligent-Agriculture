@@ -61,6 +61,7 @@
             <ImageView
                 android:id="@+id/frag_set_kq_img1"
                 android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/p1" />
 
@@ -91,7 +92,10 @@
 
             <EditText
                 android:id="@+id/frag_set_kq_wd_min"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:background="@drawable/car0"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="#0057ff"
@@ -111,7 +115,10 @@
 
             <EditText
                 android:id="@+id/frag_set_kq_wd_max"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:background="@drawable/car0"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="#0057ff"
@@ -186,6 +193,7 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:layout_marginLeft="5dp"
                 android:id="@+id/frag_set_kq_img2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,7 +226,10 @@
 
             <EditText
                 android:id="@+id/frag_set_kq_sd_min"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:background="@drawable/car0"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="#0057ff"
@@ -238,7 +249,10 @@
 
             <EditText
                 android:id="@+id/frag_set_kq_sd_max"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:background="@drawable/car0"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="#0057ff"

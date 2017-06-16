@@ -16,6 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.trycatch.mysnackbar.Prompt;
+import com.trycatch.mysnackbar.TSnackbar;
+
 import xyz.abug.www.fragment.SettingCO2Fragment;
 import xyz.abug.www.fragment.SettingKqFragment;
 import xyz.abug.www.fragment.SettingSunnyFragment;
@@ -35,7 +38,7 @@ public class SettingContentActivity extends AppCompatActivity {
     private FragmentTransaction mTransaction;
     private FragmentManager mManager;
     private Fragment mFr;
-    private ImageButton mImgBtn;
+    private static ImageButton mImgBtn;
     private MyBroadCast mMyBroadCast;
     private static Context mContext;
 
@@ -259,5 +262,9 @@ public class SettingContentActivity extends AppCompatActivity {
                 SettingTrFragment.showDataSJ(sensor);
                 break;
         }
+    }
+
+    public static void showToast(String data, Prompt prompt) {
+        TSnackbar.make(mImgBtn, data, TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN).setPromptThemBackground(prompt).show();
     }
 }
